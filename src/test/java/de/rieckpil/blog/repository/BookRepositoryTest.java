@@ -2,14 +2,13 @@ package de.rieckpil.blog.repository;
 
 import de.rieckpil.blog.model.Book;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -33,19 +32,19 @@ public class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @Container
-    private static final MySQLContainer MY_SQL_CONTAINER = new MySQLContainer("mysql:5.7")
+    private static final PostgreSQLContainer POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>("postgres:12")
             .withDatabaseName("springboot").withUsername("root").withPassword("123456");
 
     @DynamicPropertySource
     public static void setDatabaseProperties(DynamicPropertyRegistry propertyRegistry) {
         //propertyRegistry.add("spring.datasource.username", MY_SQL_CONTAINER::getUsername);
         //propertyRegistry.add("spring.datasource.password", MY_SQL_CONTAINER::getPassword);
-        propertyRegistry.add("spring.datasource.url", MY_SQL_CONTAINER::getJdbcUrl);
+        propertyRegistry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
     }
 
     @Test
     void test() {
-        assertTrue(MY_SQL_CONTAINER.isRunning());
+        assertTrue(POSTGRE_SQL_CONTAINER.isRunning());
     }
 
     @BeforeAll

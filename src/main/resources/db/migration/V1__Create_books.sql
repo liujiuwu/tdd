@@ -1,8 +1,6 @@
-CREATE TABLE books
-(
-    id     BIGINT UNSIGNED AUTO_INCREMENT,
-    name   varchar(255) DEFAULT NULL,
-    author varchar(255) DEFAULT NULL,
-    price  varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`id`)
+create table books (
+id     int GENERATED ALWAYS AS IDENTITY (cache 100),
+name   varchar(255) NULL,
+author varchar(255) NULL,
+price  varchar(255) NULL
 );
